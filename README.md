@@ -2,14 +2,13 @@
 
 ## Summary
 
-* Total Runs: 2
+* Total Runs: 0
 * Success Rate: 100.0%
 * Failures: 0
 * Errors:   0
-* Skipped:  0
-* Total time: 13.242 seconds
+* Skipped:  14
+* Total time: 0.001 seconds
 
-> <h2>Account tests suite</h2>
 
 
 ## Features
@@ -123,16 +122,15 @@ logoutResponse.httpStatus == SC_OK
 
 ### Customer should be able to obtain my account details
 
-Result: **PASS**
-Time: 1.282 seconds
+Result: **IGNORED**
+Time: 0
 
 <details>
-<summary> Given:  </summary>
+<summary> Given: registered account logged in </summary>
 
 <p>
 
 ```java
-given('registered account logged in')
 String accessToken = login(uid)
 ```
 
@@ -141,12 +139,11 @@ String accessToken = login(uid)
 </details>
 
 <details>
-<summary> When:  </summary>
+<summary> When: requests my account details </summary>
 
 <p>
 
 ```java
-when('requests my account details')
 def myProfileResponse = accountApi.myProfile(uid, accessToken)
 ```
 
@@ -155,12 +152,11 @@ def myProfileResponse = accountApi.myProfile(uid, accessToken)
 </details>
 
 <details>
-<summary> Then:  </summary>
+<summary> Then: my account details are returned </summary>
 
 <p>
 
 ```java
-then('my account details are returned')
 myProfileResponse.httpStatus == SC_OK
 jsonSlurper.parseText(myProfileResponse.body).name == uid
 ```
@@ -171,29 +167,15 @@ jsonSlurper.parseText(myProfileResponse.body).name == uid
 
 ### Customer should not be able to log in with invalid credentials
 
-Result: **PASS**
-Time: 1.894 seconds
+Result: **IGNORED**
+Time: 0
 
 <details>
-<summary> Given:  </summary>
+<summary> When: customer attempts to log in with invalid user/password combinations </summary>
 
 <p>
 
 ```java
-description('invalid credentials - ${account} / ${password}')
-```
-
-</p>
-
-</details>
-
-<details>
-<summary> When:  </summary>
-
-<p>
-
-```java
-when("customer attempts to log in with invalid user name / password combination")
 def loginResponse = accountApi.login(account, password)
 ```
 
@@ -202,12 +184,11 @@ def loginResponse = accountApi.login(account, password)
 </details>
 
 <details>
-<summary> Then:  </summary>
+<summary> Then: log in is refused </summary>
 
 <p>
 
 ```java
-then('log in is refused')
 loginResponse.httpStatus == SC_BAD_REQUEST
 ```
 
@@ -217,13 +198,6 @@ loginResponse.httpStatus == SC_BAD_REQUEST
 
 <details>
 <summary> Where: different invalid user/password combinations </summary>
-
-
- | account | password |               |
- |---------|----------|---------------|
- | sofology_swk_1588253094932@tacitknowledge.com | invalidpassword | 0.654 seconds | (PASS)
- | invaliduid | 123456 | 0.611 seconds | (PASS)
- | invaliduid | invalidpassword | 0.629 seconds | (PASS)
 
 ### Customer should be able to receive recently viewed range
 
